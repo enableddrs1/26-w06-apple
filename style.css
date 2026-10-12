@@ -1,0 +1,348 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700;800&family=Nunito:wght@500;600;700;800;900&display=swap");
+
+:root {
+  color-scheme: light;
+  font-family: "Nunito", "DM Sans", sans-serif;
+  color: #25372d;
+  background: #f7f8f4;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  --green: #367b50;
+  --pale-green: #e8f2e9;
+  --red: #d65e52;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  padding: 36px 16px;
+  background:
+    radial-gradient(ellipse at 50% 0%, #edf4e9 0, transparent 48%),
+    #f7f8f4;
+}
+
+button {
+  font: inherit;
+}
+
+.game {
+  width: min(100%, 570px);
+  margin: 0 auto;
+}
+
+.game-header {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  color: var(--green);
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.17em;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(1.8rem, 7vw, 2.45rem);
+  font-weight: 900;
+  letter-spacing: -0.055em;
+}
+
+.subtitle {
+  margin: 6px 0 0;
+  color: #718077;
+  font-size: 0.93rem;
+}
+
+.scoreboard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.score-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 12px 8px 10px;
+  border: 1px solid #e8ece5;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 4px 14px #2d49330a;
+}
+
+.score-label {
+  color: #879188;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.score-value {
+  font-family: "DM Sans", "Nunito", sans-serif;
+  font-size: clamp(1.35rem, 6vw, 1.8rem);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+
+.timer-card .score-value {
+  color: var(--green);
+}
+
+.timer-card.is-low .score-value {
+  color: var(--red);
+}
+
+.play-area {
+  overflow: hidden;
+  padding: 16px;
+  border: 1px solid #e8ece5;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 12px 36px #2d49330d;
+}
+
+.board-heading,
+.game-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.board-heading {
+  min-height: 28px;
+  margin: 0 1px 12px;
+}
+
+.game-status,
+.selection-total,
+.game-footer p {
+  margin: 0;
+  color: #718077;
+  font-size: 0.79rem;
+  font-weight: 700;
+}
+
+.game-status {
+  color: var(--green);
+}
+
+.selection-total {
+  flex: 0 0 auto;
+}
+
+.selection-total strong {
+  display: inline-block;
+  min-width: 1.6em;
+  color: #25372d;
+  font-family: "DM Sans", sans-serif;
+  font-size: 1rem;
+  text-align: right;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: clamp(4px, 1.3vw, 8px);
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.tile {
+  position: relative;
+  display: grid;
+  aspect-ratio: 1;
+  place-items: center;
+  min-width: 0;
+  padding: 0;
+  border: 1px solid #e6eee4;
+  border-radius: clamp(6px, 2vw, 12px);
+  background: #f0f6ed;
+  color: #355d3e;
+  cursor: crosshair;
+  transition: background-color 100ms ease, border-color 100ms ease, transform 100ms ease, opacity 100ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.apple-icon {
+  font-size: clamp(1.25rem, 6.5vw, 2.1rem);
+  line-height: 1;
+  filter: drop-shadow(0 2px 1px #65351d33);
+  transition: transform 100ms ease;
+}
+
+.apple-number {
+  position: absolute;
+  top: 53%;
+  left: 50%;
+  color: #fff;
+  font-family: "DM Sans", sans-serif;
+  font-size: clamp(0.75rem, 3.8vw, 1.15rem);
+  font-weight: 800;
+  line-height: 1;
+  text-shadow: 0 1px 3px #5f211c, 0 0 2px #5f211c;
+  transform: translate(-50%, -50%);
+}
+
+.tile.is-empty {
+  border-style: dashed;
+  background: #f8faf6;
+  cursor: default;
+}
+
+.tile:enabled:hover {
+  border-color: #a6c7a2;
+  background: #e4f0e0;
+}
+
+.tile:disabled {
+  cursor: default;
+}
+
+.tile.is-selected {
+  transform: scale(0.94);
+  border-color: #518e5b;
+  background: #b8dcb4;
+  color: #244c2f;
+}
+
+.tile.is-selected .apple-icon {
+  transform: scale(0.9);
+}
+
+.tile.is-valid {
+  border-color: #367b50;
+  background: #367b50;
+  color: #fff;
+}
+
+.board.is-locked .tile {
+  opacity: 0.72;
+}
+
+.game-footer {
+  margin-top: 14px;
+}
+
+.game-footer p {
+  font-size: 0.73rem;
+}
+
+.start-button {
+  flex: 0 0 auto;
+  min-height: 42px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--green);
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 800;
+  transition: background-color 120ms ease, transform 120ms ease;
+}
+
+.start-button:hover {
+  transform: translateY(-1px);
+  background: #2d6942;
+}
+
+.start-button:focus-visible,
+.tile:focus-visible {
+  outline: 3px solid #efbd55;
+  outline-offset: 2px;
+}
+
+.hint {
+  margin: 14px 0 0;
+  color: #89938b;
+  font-size: 0.77rem;
+  text-align: center;
+}
+
+.confetti {
+  position: fixed;
+  z-index: 10;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: -14px;
+  width: 9px;
+  height: 14px;
+  border-radius: 2px;
+  background: var(--confetti-color);
+  opacity: 0;
+  animation: confetti-fall var(--confetti-duration) var(--confetti-delay) ease-in forwards;
+}
+
+.confetti-piece:nth-child(3n) {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+@keyframes confetti-fall {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, -2vh, 0) rotate(0deg);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--confetti-drift), 110vh, 0) rotate(var(--confetti-rotation));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 420px) {
+  body {
+    padding: 24px 10px;
+  }
+
+  .play-area {
+    padding: 12px 10px;
+  }
+
+  .scoreboard {
+    gap: 6px;
+  }
+
+  .game-status,
+  .selection-total,
+  .game-footer p {
+    font-size: 0.68rem;
+  }
+
+  .start-button {
+    min-height: 38px;
+    padding: 0 12px;
+    font-size: 0.8rem;
+  }
+}
